@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bloom, Samanta!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #e0f7fa 0%, #fce4ec 100%);
+      overflow: hidden;
+    }
+
+    /* Animated SVG background */
+    .bg-flowers {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.25;
+      animation: bgFade 3s ease-in;
+    }
+    @keyframes bgFade {
+      from { opacity: 0; }
+      to { opacity: 0.25; }
+    }
+
+    .bookmark {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.90);
+      border: 2px solid #b2dfdb;
+      border-radius: 24px;
+      width: 340px;
+      padding: 36px 28px 28px 28px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(44,62,80,0.15), 0 1.5px 8px #b2dfdb;
+      animation: fadeIn 1.4s cubic-bezier(.42,0,.58,1);
+      backdrop-filter: blur(2px);
+    }
+
+    h2 {
+      color: #43a047;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 8px #b2dfdb40;
+    }
+
+    .flower-btn {
+      display: inline-block;
+      font-size: 60px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin: 18px 0 8px 0;
+      filter: drop-shadow(0 0 12px #8bc34a88);
+      animation: pulse 1.5s infinite alternate;
+      outline: none;
+      border: none;
+      background: none;
+    }
+    .flower-btn:hover, .flower-btn:focus {
+      transform: scale(1.18) rotate(-8deg);
+      box-shadow: 0 0 28px #8bc34a99;
+    }
+    @keyframes pulse {
+      0% { filter: drop-shadow(0 0 8px #8bc34a44);}
+      100% { filter: drop-shadow(0 0 24px #8bc34a);}
+    }
+
+    #message {
+      color: #37474f;
+      font-size: 1.13rem;
+      margin-top: 24px;
+      min-height: 64px;
+      opacity: 1;
+      transition: opacity 0.6s;
+      line-height: 1.5;
+      padding: 0 6px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      text-shadow: 0 1px 12px #b2dfdb20;
+    }
+    .fade-out {
+      opacity: 0;
+    }
+    .fade-in {
+      opacity: 1;
+      animation: textFadeIn 0.7s;
+    }
+    @keyframes textFadeIn {
+      from { opacity: 0; transform: translateY(18px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .signature {
+      margin-top: 36px;
+      font-size: 15px;
+      color: #888;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .heart {
+      color: #e57373;
+      font-size: 1.2em;
+      animation: heartBeat 1.3s infinite alternate;
+      vertical-align: middle;
+    }
+    @keyframes heartBeat {
+      0% { transform: scale(1);}
+      100% { transform: scale(1.18);}
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(36px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    @media (max-width: 500px) {
+      .bookmark {
+        width: 96vw;
+        padding: 22px 4vw 18px 4vw;
+      }
+      h2 { font-size: 1.1rem; }
+      .flower-btn { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated flower SVG background -->
+  <svg class="bg-flowers" viewBox="0 0 800 600" preserveAspectRatio="none">
+    <g>
+      <circle cx="120" cy="540" r="36" fill="#f8bbd0" opacity="0.8"/>
+      <circle cx="180" cy="570" r="22" fill="#b2dfdb" opacity="0.7"/>
+      <circle cx="700" cy="520" r="40" fill="#ffe082" opacity="0.7"/>
+<circle cx="400" cy="590" r="26" fill="#c5e1a5" opacity="0.6"/>
+      <circle cx="650" cy="580" r="18" fill="#b39ddb" opacity="0.7"/>
+      <circle cx="90" cy="590" r="14" fill="#ffccbc" opacity="0.8"/>
+      <circle cx="320" cy="560" r="18" fill="#80cbc4" opacity="0.7"/>
+      <circle cx="600" cy="540" r="22" fill="#ffecb3" opacity="0.7"/>
+      <circle cx="250" cy="580" r="14" fill="#f8bbd0" opacity="0.8"/>
+    </g>
+  </svg>
+  <div class="bookmark" role="main" aria-label="Encouragement for Samanta">
+    <h2>Bloom for Your Exam, Samanta!</h2>
+    <button class="flower-btn" id="flowerBtn" aria-label="Click for encouragement">&#127804;</button>
+    <div id="message" class="fade-in">Click the flower to reveal encouragement!</div>
+    <div class="signature">
+      - Always rooting for you, Niloy <span class="heart">&#10084;&#65039;</span>
+    </div>
+  </div>
+  <script>
+    const messages = [
+      "You’ve prepared beautifully - just trust yourself.",
+      "Exams are just pages - and you’ve read every chapter.",
+      "You’re more capable than you realize, Samanta.",
+      "Breathe deep, think calm, write smart - you've got this.",
+      "Let your mind shine bright like the garden you love.",
+      "Your hard work will bloom into success.",
+      "You don’t need luck - you need belief. And you have it.",
+      "Your strength and intelligence are your superpowers.",
+      "Like a flower, you're unfolding brilliance with grace.",
+      "Every answer you write carries your spark. Keep going!",
+      "You make every challenge blossom with hope.",
+      "The world is brighter with your courage - shine on!",
+      "You’re the rarest flower in the garden of life."
+    ];
+    const msgDiv = document.getElementById('message');
+    const flowerBtn = document.getElementById('flowerBtn');
+    let lastIdx = -1;
+
+    function showMessage() {
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * messages.length);
+      } while (idx === lastIdx && messages.length > 1);
+      lastIdx = idx;
+
+      msgDiv.classList.remove('fade-in');
+      msgDiv.classList.add('fade-out');
+      setTimeout(() => {
+        msgDiv.textContent = messages[idx];
+        msgDiv.classList.remove('fade-out');
+        msgDiv.classList.add('fade-in');
+      }, 350);
+    }
+
+    flowerBtn.addEventListener('click', showMessage);
+    flowerBtn.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        showMessage();
+      }
+    });
+  </script>
+</body>
+</html>
